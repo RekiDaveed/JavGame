@@ -11,7 +11,7 @@ import javax.swing.*;
 public class JavGame {
     public static void main(String[] args) {
 
-        JFrame frame = new JFrame("JavGame");
+        JFrame frame = new JFrame("Yumi's Adventure");
         Game game = new Game();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
