@@ -22,10 +22,7 @@ public class JavGame {
         frame.addKeyListener(new Keyboard());
         frame.addMouseListener(new Mouse());
 
-
-
-
+        game.GameStart();
 
     }
-
 }

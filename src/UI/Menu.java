@@ -52,7 +52,7 @@ public class Menu extends JPanel{
         revalidate();
         setVisible(true);
 
-        Play.addActionListener(e -> maingame.GameStart());
+        Play.addActionListener(e -> maingame.Beginning());
 
         Settings.addActionListener(e -> {
             if (SettingsState == 0){
