@@ -1,5 +1,6 @@
 package UI;
 
+import Input.Keyboard;
 import Main.G_State;
 import Maps.Map1;
 
@@ -9,6 +10,7 @@ import java.awt.*;
 
 public class Game extends JPanel implements Runnable{
     public CardLayout GamecardLayout = new CardLayout();
+    Keyboard keyboard = new Keyboard();
     public Thread gameThread;
     public int TileSize = 38;
     public int TileXCount = 20;
@@ -19,7 +21,9 @@ public class Game extends JPanel implements Runnable{
         setLayout(GamecardLayout);
         GamecardLayout.show(this, "MENU");
         new Menu(this);
-
+        addKeyListener(keyboard);
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     public void GameStart(){
@@ -36,9 +40,8 @@ public class Game extends JPanel implements Runnable{
     @Override
     public void run() {
         while(gameThread != null){
-            System.out.println("Game Running");
-            updateGame();
-            repaint();
+
+
             // UPDATE GAME LOGIC HERE
             // REDRAW GAME HERE
         }
