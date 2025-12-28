@@ -1,5 +1,6 @@
 package Maps;
 
+import Entity.Player;
 import Input.Keyboard;
 import UI.Game;
 
@@ -16,11 +17,13 @@ public class Map extends JPanel {
     public int TileYCount = 16;
 
     Keyboard keyboard = new Keyboard();
+    public Player player;
 
     // Set Public player position
     int Plrx = 100;
     int Plry = 100;
     int PlrSpeed = 4;
+
 
     public Map(Game mainpanel) {
         mainpanel.add(this, "MAP1");
@@ -32,7 +35,10 @@ public class Map extends JPanel {
         this.keyboard = mainpanel.keyboard;
 
         mainpanel.CurrentMapDrawing = Mapdata.Map1;
+
+        player = new Player(this, mainpanel.keyboard);
     }
+
 
     public void UpdateMap(){
         // Update map elements here
@@ -45,34 +51,14 @@ public class Map extends JPanel {
         // Custom painting code here
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(Plrx,Plry,TileSize,TileSize);
+        player.drawPlayer(g2d);
         g2d.dispose();
     }
 
     public void Movement(){
-        if (keyboard.Uppressed) {
-            Plry -= PlrSpeed;
-            System.out.println("Plry up");
-        }
-        if (keyboard.Dpressed) {
-            Plrx += PlrSpeed;
-            System.out.println("Plry Right");
-        }
-        if (keyboard.Apressed) {
-            Plrx -= PlrSpeed;
-            System.out.println("Plrx Left");
-        }
-        if (keyboard.Spressed) {
-            Plry += PlrSpeed;
-            System.out.println("Plrx down");
-        }
+        player.UpdatePlayerMovement();
     }
 
-    public void DrawMap(Graphics g) {
-        // Draw map based on CurrentMapDrawing
-
-    }
 }
 
 
