@@ -9,7 +9,7 @@ import UI.Menu;
 import javax.swing.*;
 
 public class JavGame {
-    public static void main(String[] args) {
+     static void main(String[] args) {
 
         JFrame frame = new JFrame("Yumi's Adventure");
         Game game = new Game();

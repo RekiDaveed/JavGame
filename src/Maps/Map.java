@@ -59,7 +59,7 @@ public class Map extends JPanel {
             System.out.println("Plry up");
         }
         if (keyboard.Dpressed) {
-            Plry += PlrSpeed;
+            Plrx += PlrSpeed;
             System.out.println("Plry Right");
         }
         if (keyboard.Apressed) {
@@ -67,7 +67,7 @@ public class Map extends JPanel {
             System.out.println("Plrx Left");
         }
         if (keyboard.Spressed) {
-            Plrx += PlrSpeed;
+            Plry += PlrSpeed;
             System.out.println("Plrx down");
         }
     }

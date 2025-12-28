@@ -17,9 +17,11 @@ public class Game extends JPanel implements Runnable{
     public int TileYCount = 16;
     public Map CurrentMap;
 
+
     int Plrx = 100;
     int Plry = 100;
     int PlrSpeed = 4;
+    int FPS = 60;
 
 
     public Game(){
@@ -29,16 +31,14 @@ public class Game extends JPanel implements Runnable{
         addKeyListener(keyboard);
         setFocusable(true);
         requestFocusInWindow();
+
     }
+
 
     public void GameStart(){
         gameThread = new Thread(this);
         gameThread.start();
         G_State.SetPlaying(gameThread);
-    }
-
-    public void PauseGame(){
-        G_State.SetPause(gameThread);
     }
 
     public void Beginning(){
@@ -48,9 +48,19 @@ public class Game extends JPanel implements Runnable{
     @Override
     public void run() {
         while(gameThread != null){
-            updateGame(); // main entry point method
+            if (G_State.GetState() == G_State.Playing){
+                updateGame(); // main entry point method With FPS control
+            } else if (G_State.GetState() == G_State.Pause){
+                // Nothing
+            }
+            try {
+                Thread.sleep(1000 / FPS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
+
 
     public void updateGame(){
         if(CurrentMap != null){

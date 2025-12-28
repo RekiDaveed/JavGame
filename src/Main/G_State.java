@@ -43,10 +43,4 @@ public enum G_State {
         thread.start();
         return G_state;
     }
-
-    public  static G_State SetPause(Thread thread){
-        G_state = Pause;
-        Thread.yield();
-        return G_state;
-    }
 }
