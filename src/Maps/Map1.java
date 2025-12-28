@@ -5,6 +5,7 @@ import UI.Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
 
 
 public class Map1 extends JPanel {
@@ -14,6 +15,8 @@ public class Map1 extends JPanel {
     public int TileSize = 38;
     public int TileXCount = 20;
     public int TileYCount = 16;
+
+    public int[][] CurrentMapLayout;
 
     protected int[][] MapLayout;
 
@@ -28,22 +31,9 @@ public class Map1 extends JPanel {
         mainpanel.repaint();
         mainpanel.GamecardLayout.show(mainpanel, "MAP1");
         setBackground(Color.DARK_GRAY);
+        System.out.println("Map1 Loaded");
 
-    }
-
-    public void GenerateMap(){
-        MapLayout = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-                {0, 1, 0, 1, 1, 1, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 1, 1, 1, 0, 1, 0},
-                {0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-                {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        };
+        CurrentMapLayout = Mapdata.Map1;
     }
 
     public void UpdateMap(){

@@ -19,8 +19,6 @@ public class JavGame {
         frame.add(game);
         frame.pack();
         frame.setVisible(true);
-        frame.addKeyListener(new Keyboard());
-        frame.addMouseListener(new Mouse());
 
         game.GameStart();
 

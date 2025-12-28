@@ -16,6 +16,10 @@ public class Game extends JPanel implements Runnable{
     public int TileXCount = 20;
     public int TileYCount = 16;
 
+    int Plrx = 100;
+    int Plry = 100;
+    int PlrSpeed = 4;
+
 
     public Game(){
         setLayout(GamecardLayout);
@@ -41,14 +45,39 @@ public class Game extends JPanel implements Runnable{
     public void run() {
         while(gameThread != null){
 
-
             // UPDATE GAME LOGIC HERE
             // REDRAW GAME HERE
+            repaint();
+            updateGame();
         }
     }
 
     public void updateGame(){
         // Update game logic here
+        // Move player based on keyboard input
+        if (keyboard.Uppressed) {
+            Plry -= PlrSpeed;
+        }
+        if (keyboard.Dpressed) {
+            Plry += PlrSpeed;
+        }
+        if (keyboard.Apressed) {
+            Plrx -= PlrSpeed;
+        }
+        if (keyboard.Spressed) {
+            Plrx += PlrSpeed;
+        }
+
+    }
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        // Custom painting code here
+
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(Plrx,Plry,TileSize,TileSize);
+        g2d.dispose();
     }
 
 }

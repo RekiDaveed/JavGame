@@ -33,4 +33,8 @@ public enum G_State {
                 break;
         }
     }
+
+    public static G_State GetState(){
+        return G_state;
+    }
 }
