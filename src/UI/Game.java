@@ -33,14 +33,12 @@ public class Game extends JPanel implements Runnable{
 
     public void GameStart(){
         gameThread = new Thread(this);
-        // G_State.Resume_state(gameThread);
         gameThread.start();
-        G_State.SetState(G_State.Playing);
-      //  new Map1(this);
+        G_State.SetPlaying(gameThread);
     }
 
     public void PauseGame(){
-        G_State.SetState(G_State.Pause);
+        G_State.SetPause(gameThread);
     }
 
     public void Beginning(){

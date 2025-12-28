@@ -58,7 +58,7 @@ public class SettingsUI extends JPanel {
 
         ChangeDifficulty.addActionListener(e -> {
             CycleDifficulty();
-            ChangeDifficulty.setText("Difficulty Level: " + (DifficultyLevel == 1 ? "Easy" : DifficultyLevel == 2 ? "Medium" : "Hard"));
+            ChangeDifficulty.setText("Difficulty Level: " + (DifficultyLevel == 1 ? "Easy" : DifficultyLevel == 2 ? "Medium" : "Lethal"));
         });
 
         BackToMenu.addActionListener(e -> {
