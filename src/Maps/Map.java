@@ -15,10 +15,7 @@ public class Map extends JPanel {
     public int TileXCount = 20;
     public int TileYCount = 16;
 
-    public int[][] CurrentMapLayout;
     Keyboard keyboard = new Keyboard();
-
-    protected int[][] MapLayout;
 
     // Set Public player position
     int Plrx = 100;
@@ -34,7 +31,7 @@ public class Map extends JPanel {
         System.out.println("Map1 Loaded");
         this.keyboard = mainpanel.keyboard;
 
-        CurrentMapLayout = Mapdata.Map1;
+        mainpanel.CurrentMapDrawing = Mapdata.Map1;
     }
 
     public void UpdateMap(){
@@ -70,6 +67,11 @@ public class Map extends JPanel {
             Plry += PlrSpeed;
             System.out.println("Plrx down");
         }
+    }
+
+    public void DrawMap(Graphics g) {
+        // Draw map based on CurrentMapDrawing
+
     }
 }
 

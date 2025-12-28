@@ -16,6 +16,8 @@ public class Game extends JPanel implements Runnable{
     public int TileXCount = 20;
     public int TileYCount = 16;
     public Map CurrentMap;
+    public int[][] CurrentMapDrawing;
+
 
 
     int Plrx = 100;
@@ -38,10 +40,10 @@ public class Game extends JPanel implements Runnable{
     public void GameStart(){
         gameThread = new Thread(this);
         gameThread.start();
-        G_State.SetPlaying(gameThread);
     }
 
     public void Beginning(){
+        G_State.SetState(G_State.Playing);
         this.CurrentMap = new Map(this);
     }
 
@@ -50,7 +52,7 @@ public class Game extends JPanel implements Runnable{
         while(gameThread != null){
             if (G_State.GetState() == G_State.Playing){
                 updateGame(); // main entry point method With FPS control
-            } else if (G_State.GetState() == G_State.Pause){
+            } else {
                 // Nothing
             }
             try {
@@ -65,8 +67,6 @@ public class Game extends JPanel implements Runnable{
     public void updateGame(){
         if(CurrentMap != null){
             CurrentMap.UpdateMap();
-        } else {
-            System.out.println("No map loaded");
         }
     }
 }
