@@ -19,7 +19,6 @@ public class Keyboard implements KeyListener {
         switch (key) {
             case KeyEvent.VK_W:
                 Uppressed = true;
-                System.out.println("W pressed");
                 break;
             case KeyEvent.VK_S:
                 Spressed = true;

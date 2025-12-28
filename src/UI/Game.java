@@ -2,7 +2,7 @@ package UI;
 
 import Input.Keyboard;
 import Main.G_State;
-import Maps.Map1;
+import Maps.Map;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,11 +10,12 @@ import java.awt.*;
 
 public class Game extends JPanel implements Runnable{
     public CardLayout GamecardLayout = new CardLayout();
-    Keyboard keyboard = new Keyboard();
+    public Keyboard keyboard = new Keyboard();
     public Thread gameThread;
     public int TileSize = 38;
     public int TileXCount = 20;
     public int TileYCount = 16;
+    public Map CurrentMap;
 
     int Plrx = 100;
     int Plry = 100;
@@ -32,52 +33,32 @@ public class Game extends JPanel implements Runnable{
 
     public void GameStart(){
         gameThread = new Thread(this);
+        // G_State.Resume_state(gameThread);
         gameThread.start();
         G_State.SetState(G_State.Playing);
       //  new Map1(this);
     }
 
+    public void PauseGame(){
+        G_State.SetState(G_State.Pause);
+    }
+
     public void Beginning(){
-        new Map1(this);
+        this.CurrentMap = new Map(this);
     }
 
     @Override
     public void run() {
         while(gameThread != null){
-
-            // UPDATE GAME LOGIC HERE
-            // REDRAW GAME HERE
-            repaint();
-            updateGame();
+            updateGame(); // main entry point method
         }
     }
 
     public void updateGame(){
-        // Update game logic here
-        // Move player based on keyboard input
-        if (keyboard.Uppressed) {
-            Plry -= PlrSpeed;
+        if(CurrentMap != null){
+            CurrentMap.UpdateMap();
+        } else {
+            System.out.println("No map loaded");
         }
-        if (keyboard.Dpressed) {
-            Plry += PlrSpeed;
-        }
-        if (keyboard.Apressed) {
-            Plrx -= PlrSpeed;
-        }
-        if (keyboard.Spressed) {
-            Plrx += PlrSpeed;
-        }
-
     }
-
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        // Custom painting code here
-
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(Plrx,Plry,TileSize,TileSize);
-        g2d.dispose();
-    }
-
 }

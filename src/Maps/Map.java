@@ -5,10 +5,9 @@ import UI.Game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Map;
 
 
-public class Map1 extends JPanel {
+public class Map extends JPanel {
     // Home of the first map
     // IF player dies and Chooses to restart, they will be sent back here
 
@@ -17,6 +16,7 @@ public class Map1 extends JPanel {
     public int TileYCount = 16;
 
     public int[][] CurrentMapLayout;
+    Keyboard keyboard = new Keyboard();
 
     protected int[][] MapLayout;
 
@@ -25,13 +25,14 @@ public class Map1 extends JPanel {
     int Plry = 100;
     int PlrSpeed = 4;
 
-    public Map1(Game mainpanel) {
+    public Map(Game mainpanel) {
         mainpanel.add(this, "MAP1");
         mainpanel.revalidate();
         mainpanel.repaint();
         mainpanel.GamecardLayout.show(mainpanel, "MAP1");
         setBackground(Color.DARK_GRAY);
         System.out.println("Map1 Loaded");
+        this.keyboard = mainpanel.keyboard;
 
         CurrentMapLayout = Mapdata.Map1;
     }
@@ -39,6 +40,7 @@ public class Map1 extends JPanel {
     public void UpdateMap(){
         // Update map elements here
         repaint();
+        Movement();
     }
 
     public void paintComponent(Graphics g){
@@ -50,6 +52,26 @@ public class Map1 extends JPanel {
         g2d.fillRect(Plrx,Plry,TileSize,TileSize);
         g2d.dispose();
     }
+
+    public void Movement(){
+        if (keyboard.Uppressed) {
+            Plry -= PlrSpeed;
+            System.out.println("Plry up");
+        }
+        if (keyboard.Dpressed) {
+            Plry += PlrSpeed;
+            System.out.println("Plry Right");
+        }
+        if (keyboard.Apressed) {
+            Plrx -= PlrSpeed;
+            System.out.println("Plrx Left");
+        }
+        if (keyboard.Spressed) {
+            Plrx += PlrSpeed;
+            System.out.println("Plrx down");
+        }
+    }
 }
+
 
 
