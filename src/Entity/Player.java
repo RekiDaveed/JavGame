@@ -5,11 +5,17 @@ import Maps.Map;
 import UI.Game;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Player extends  Entity {
 
     Map map;
     Keyboard keyboard;
+
+    BufferedImage[] PlayerLeft = new BufferedImage[4];
+    BufferedImage[] PlayerRight = new BufferedImage[4];
+    BufferedImage[] PlayerUp = new BufferedImage[4];
+    BufferedImage[] PlayerDown = new BufferedImage[4];
 
     public Player(Map map, Keyboard keyboard) {
         this.map = map;
@@ -27,6 +33,10 @@ public class Player extends  Entity {
         PositionX = 100;
         PositionY = 100;
         Speed = 4;
+    }
+
+    public void LoadPlayerMovementImages(){
+        // Load player movement images here
     }
     
     public void UpdatePlayerMovement(){
