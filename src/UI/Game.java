@@ -3,6 +3,7 @@ package UI;
 import Input.Keyboard;
 import Main.G_State;
 import Maps.Map;
+import Maps.Tilemanager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,18 +12,20 @@ import java.awt.*;
 public class Game extends JPanel implements Runnable{
     public CardLayout GamecardLayout = new CardLayout();
     public Keyboard keyboard = new Keyboard();
+    Tilemanager tilemanager = new Tilemanager(this);
     public Thread gameThread;
-    public int TileSize = 38;
-    public int TileXCount = 20;
-    public int TileYCount = 16;
+    public final int TileSize = 38;
+    public final int TileXCount = 20;  // Map Width 760
+    public final int TileYCount = 16;  // Map Height 608
     public Map CurrentMap;
     public int[][] CurrentMapDrawing;
 
+    public final int JFrameWidth = TileXCount * TileSize;
+    public final int JFrameHeight = TileYCount * TileSize;
 
-
-    int Plrx = 100;
-    int Plry = 100;
-    int PlrSpeed = 4;
+    public int Plrx = 100;
+    public int Plry = 100;
+    public int PlrSpeed = 4;
     int FPS = 60;
 
 

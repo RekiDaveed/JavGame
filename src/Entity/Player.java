@@ -14,6 +14,7 @@ public class Player extends  Entity {
 
     Map map;
     Keyboard keyboard;
+    Game gamepanel;
 
     public BufferedImage[] PlayerLeft = new BufferedImage[4];
     public BufferedImage[] PlayerRight = new BufferedImage[4];
@@ -24,44 +25,36 @@ public class Player extends  Entity {
     public int spriteCounter = 0;
     public int spriteNum = 0;
 
-    public Player(Map map, Keyboard keyboard) {
+    public Player(Map map, Game mainpanel) {
         this.map = map;
-        this.keyboard = keyboard;
+        this.keyboard = mainpanel.keyboard;
+        this.gamepanel = mainpanel;
         SetDefaultValues();
         LoadPlayerMovementImages();
     }
     
     public void drawPlayer(Graphics2D g2d){
-        BufferedImage CurrentRender = null;
-
-        switch (Direction){
-            case "left":
-                CurrentRender = PlayerLeft[spriteNum];
-                break;
-            case "right":
-                CurrentRender = PlayerRight[spriteNum];
-                break;
-            case "up":
-                CurrentRender = PlayerUp[spriteNum];
-                break;
-            case "down":
-                CurrentRender = PlayerDown[spriteNum];
-                break;
-        }
+        BufferedImage CurrentRender = switch (Direction) {
+            case "left" -> PlayerLeft[spriteNum];
+            case "right" -> PlayerRight[spriteNum];
+            case "up" -> PlayerUp[spriteNum];
+            case "down" -> PlayerDown[spriteNum];
+            default -> null;
+        };
 
         if (CurrentRender != null) {
-            g2d.drawImage(CurrentRender, PositionX, PositionY, map.TileSize, map.TileSize, null);
+            g2d.drawImage(CurrentRender, PositionX, PositionY, gamepanel.TileSize, gamepanel.TileSize, null);
         } else {
             // Fallback: draw a blue rectangle if images are not loaded
 
             g2d.setColor(Color.BLUE);
-            g2d.fillRect(PositionX, PositionY, map.TileSize, map.TileSize);
+            g2d.fillRect(PositionX, PositionY, gamepanel.TileSize, gamepanel.TileSize);
         }
     }
 
     public void SetDefaultValues(){
         PositionX = 100;
-        PositionY = 100;
+        PositionY = 400;
         Speed = 4;
     }
 
@@ -79,8 +72,8 @@ public class Player extends  Entity {
                 PlayerDown[i] = PlayerDownfullSheet.getSubimage(i*16, 0, 16, 16);
                 PlayerUp[i] = PlayerUpfullSheet.getSubimage(i*16, 0, 16, 16);
             }
-        } catch (IOException _) {
-
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     
@@ -89,6 +82,7 @@ public class Player extends  Entity {
         if (keyboard.Uppressed) {
             PositionY -= Speed;
             Direction = "up";
+            if (PositionY < 0) PositionY = 0;
         }
         if (keyboard.Dpressed) {
             PositionX += Speed;
@@ -97,6 +91,7 @@ public class Player extends  Entity {
         if (keyboard.Apressed) {
             PositionX -= Speed;
             Direction = "left";
+            if (PositionX < 0) PositionX = 0;
         }
         if (keyboard.Spressed) {
             PositionY += Speed;

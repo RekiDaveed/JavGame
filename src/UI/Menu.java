@@ -11,13 +11,6 @@ public class Menu extends JPanel{
     JButton Quit = new JButton("Quit");
     public int SettingsState = 0; // 0 = closed, 1 = open
 
-    public int TileSize = 38;
-    public int TileXCount = 20;
-    public int TileYCount = 16;
-
-    public int JFrameWidth = TileXCount * TileSize;
-    public int JFrameHeight = TileYCount * TileSize;
-
     public Menu(Game maingame){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(Box.createVerticalGlue());
@@ -48,7 +41,7 @@ public class Menu extends JPanel{
         maingame.add(this, "MENU");
         SettingsUI settingsUI = new SettingsUI(maingame);
 
-        setPreferredSize(new Dimension(JFrameWidth, JFrameHeight));
+        setPreferredSize(new Dimension(maingame.JFrameWidth, maingame.JFrameHeight));
         revalidate();
         setVisible(true);
 

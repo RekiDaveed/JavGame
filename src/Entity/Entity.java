@@ -5,4 +5,6 @@ public class Entity {
     int PositionY;
     int Speed;
 
+
+
 }
