@@ -14,11 +14,15 @@ public class Map extends JPanel {
 
     Keyboard keyboard = new Keyboard();
     public Player player;
+    Game mainpanel;
+    Tilemanager Tilemanager;
 
     public Map(Game mainpanel) {
         mainpanel.add(this, "MAP1");
         mainpanel.revalidate();
         mainpanel.repaint();
+        this.mainpanel = mainpanel;
+        this.Tilemanager = mainpanel.tilemanager;
         mainpanel.GamecardLayout.show(mainpanel, "MAP1");
         setBackground(Color.BLACK);
         System.out.println("Map1 Loaded");
@@ -37,8 +41,9 @@ public class Map extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         // Custom painting code here
-
         Graphics2D g2d = (Graphics2D) g;
+
+        Tilemanager.DrawTiles(g2d);
         player.drawPlayer(g2d);
         g2d.dispose();
     }

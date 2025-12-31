@@ -2,18 +2,80 @@ package Maps;
 
 import UI.Game;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
+
 public class Tilemanager {
     Game game;
     Tile[] tiles;
+    MapsArray MapsArray = new MapsArray();
+
+    // X = Left Right 0 - MAX , Y = Top Bottom 0 - MAX
+
+    // Grass = Tile[0]
+    // Water = Tile[1]
+    // Earth = Tile[2]
+    // Tree = Tile[3]
+    // Rock = Tile[4]
+    // Sand = Tile[5]
+    // House = Tile[6]
+    // Animal = Tile[7]
+    // Road = Tile[8]
+
 
     public Tilemanager(Game game) {
         this.game = game;
 
-        Tile[] tiles = new Tile[10];
+       tiles = new Tile[10];
         GettileImage();
     }
 
     public void GettileImage(){
+        try{
+            tiles[0] = new Tile();
+            tiles[0].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/TilesetGrass/map2.png")));
+            tiles[0].image = tiles[0].image.getSubimage(76,0, game.TileSize, game.TileSize);
+            // GrassTile
 
+            tiles[1] = new Tile();
+            tiles[1].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/TilesetGrass/map2.png")));
+            tiles[1].collision = false;
+
+            tiles[2] = new Tile();
+            tiles[2].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/TilesetGrass/map2.png")));
+
+            tiles[3] = new Tile();
+            tiles[3].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/TilesetGrass/map2.png")));
+            tiles[3].image = tiles[3].image.getSubimage(0,202, game.TileSize, game.TileSize);
+            tiles[3].collision = true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void DrawTiles(Graphics2D g2){
+        int width = 0; // calcuate tile position
+        int height = 0; //Calculate tile position
+
+        int row;
+        int col;
+
+        while (width < game.TileXCount) {
+            while(height < game.TileYCount) {
+
+                int tileNum = MapsArray.Map1[height][width];
+                int WorldX = width * game.TileSize;
+                int WorldY = height * game.TileSize;
+
+                g2.drawImage(tiles[tileNum].image, WorldX, WorldY, game.TileSize, game.TileSize, null);
+                height++;
+            }
+            height = 0;
+            width++;
+        }
     }
 }

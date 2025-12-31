@@ -12,7 +12,7 @@ import java.awt.*;
 public class Game extends JPanel implements Runnable{
     public CardLayout GamecardLayout = new CardLayout();
     public Keyboard keyboard = new Keyboard();
-    Tilemanager tilemanager = new Tilemanager(this);
+    public Tilemanager tilemanager = new Tilemanager(this);
     public Thread gameThread;
     public final int TileSize = 38;
     public final int TileXCount = 20;  // Map Width 760
