@@ -4,7 +4,6 @@ import UI.Game;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -36,20 +35,21 @@ public class Tilemanager {
     public void GettileImage(){
         try{
             tiles[0] = new Tile();
-            tiles[0].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/TilesetGrass/map2.png")));
-            tiles[0].image = tiles[0].image.getSubimage(76,0, game.TileSize, game.TileSize);
+            tiles[0].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/Environment/spr_tileset_sunnysideworld_16px.png")));
+            tiles[0].image = tiles[0].image.getSubimage(16,16, game.TileSize, game.TileSize);
             // GrassTile
 
             tiles[1] = new Tile();
-            tiles[1].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/TilesetGrass/map2.png")));
+            tiles[1].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/Environment/spr_tileset_sunnysideworld_16px.png")));
             tiles[1].collision = false;
 
             tiles[2] = new Tile();
-            tiles[2].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/TilesetGrass/map2.png")));
+            tiles[2].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/Environment/spr_tileset_sunnysideworld_16px.png")));
 
             tiles[3] = new Tile();
-            tiles[3].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/TilesetGrass/map2.png")));
-            tiles[3].image = tiles[3].image.getSubimage(0,202, game.TileSize, game.TileSize);
+            tiles[3].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/Environment/spr_tileset_sunnysideworld_16px.png")));
+            tiles[3].image = tiles[3].image.getSubimage(816,16, game.TileSize, game.TileSize);
+             // Tree Tile
             tiles[3].collision = true;
 
         } catch (IOException e) {
@@ -60,9 +60,6 @@ public class Tilemanager {
     public void DrawTiles(Graphics2D g2){
         int width = 0; // calcuate tile position
         int height = 0; //Calculate tile position
-
-        int row;
-        int col;
 
         while (width < game.TileXCount) {
             while(height < game.TileYCount) {

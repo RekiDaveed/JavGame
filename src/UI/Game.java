@@ -14,7 +14,7 @@ public class Game extends JPanel implements Runnable{
     public Keyboard keyboard = new Keyboard();
     public Tilemanager tilemanager = new Tilemanager(this);
     public Thread gameThread;
-    public final int TileSize = 38;
+    public final int TileSize = 32;
     public final int TileXCount = 20;  // Map Width 760
     public final int TileYCount = 16;  // Map Height 608
     public Map CurrentMap;
