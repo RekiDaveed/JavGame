@@ -11,7 +11,7 @@ import javax.swing.*;
 public class JavGame {
      static void main(String[] args) {
 
-        JFrame frame = new JFrame("____'s Adventure");
+        JFrame frame = new JFrame("Type Soul is Real");
         Game game = new Game();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

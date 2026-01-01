@@ -4,6 +4,7 @@ import UI.Game;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -34,22 +35,24 @@ public class Tilemanager {
 
     public void GettileImage(){
         try{
-            tiles[0] = new Tile();
-            tiles[0].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/Environment/spr_tileset_sunnysideworld_16px.png")));
-            tiles[0].image = tiles[0].image.getSubimage(16,16, game.TileSize, game.TileSize);
-            // GrassTile
+            BufferedImage FullSheetSunnySideWorld = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/Environment/spr_tileset_sunnysideworld_16px.png")));
 
+            // GrassTile
+            tiles[0] = new Tile();
+            tiles[0].image = FullSheetSunnySideWorld.getSubimage(16,16, game.TileSize, game.TileSize);
+
+            // WaterTile
             tiles[1] = new Tile();
-            tiles[1].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/Environment/spr_tileset_sunnysideworld_16px.png")));
+            tiles[1].image =  FullSheetSunnySideWorld;
             tiles[1].collision = false;
 
+            // Earth Tile
             tiles[2] = new Tile();
-            tiles[2].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/Environment/spr_tileset_sunnysideworld_16px.png")));
+            tiles[2].image =  FullSheetSunnySideWorld;
 
+            // Tree Tile
             tiles[3] = new Tile();
-            tiles[3].image =  ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/Environment/spr_tileset_sunnysideworld_16px.png")));
-            tiles[3].image = tiles[3].image.getSubimage(816,16, game.TileSize, game.TileSize);
-             // Tree Tile
+            tiles[3].image = FullSheetSunnySideWorld.getSubimage(816,16, game.TileSize, game.TileSize);
             tiles[3].collision = true;
 
         } catch (IOException e) {
