@@ -19,7 +19,7 @@ public class Tilemanager {
     // Water = Tile[1]
     // Earth = Tile[2]
     // Tree = Tile[3]
-    // Rock = Tile[4]
+    // Flower = Tile[4]
     // Sand = Tile[5]
     // House = Tile[6]
     // Animal = Tile[7]
@@ -43,17 +43,23 @@ public class Tilemanager {
 
             // WaterTile
             tiles[1] = new Tile();
-            tiles[1].image =  FullSheetSunnySideWorld;
+            tiles[1].image =  FullSheetSunnySideWorld.getSubimage(176,288, game.TileSize, game.TileSize);
             tiles[1].collision = false;
 
             // Earth Tile
             tiles[2] = new Tile();
-            tiles[2].image =  FullSheetSunnySideWorld;
+            tiles[2].image =  FullSheetSunnySideWorld.getSubimage(144,112, game.TileSize, game.TileSize);
 
             // Tree Tile
             tiles[3] = new Tile();
             tiles[3].image = FullSheetSunnySideWorld.getSubimage(816,16, game.TileSize, game.TileSize);
             tiles[3].collision = true;
+
+            // Flower Tile 15X16
+            tiles[4] = new Tile();
+            tiles[4].image = FullSheetSunnySideWorld.getSubimage(864,160, 15, 16);
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
