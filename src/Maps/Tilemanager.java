@@ -14,7 +14,6 @@ public class Tilemanager {
     MapsArray MapsArray = new MapsArray();
 
     // X = Left Right 0 - MAX , Y = Top Bottom 0 - MAX
-
     // Grass = Tile[0]
     // Water = Tile[1]
     // Earth = Tile[2]
@@ -28,60 +27,97 @@ public class Tilemanager {
 
     public Tilemanager(Game game) {
         this.game = game;
-
-       tiles = new Tile[10];
+        tiles = new Tile[10];
         GettileImage();
     }
 
     public void GettileImage(){
         try{
             BufferedImage FullSheetSunnySideWorld = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Pack/Environment/spr_tileset_sunnysideworld_16px.png")));
+            int srcTile = game.TileSize;
 
-            // GrassTile
             tiles[0] = new Tile();
-            tiles[0].image = FullSheetSunnySideWorld.getSubimage(16,16, game.TileSize, game.TileSize);
+            tiles[0].image = FullSheetSunnySideWorld.getSubimage(16,16, srcTile, srcTile);
 
-            // WaterTile
             tiles[1] = new Tile();
-            tiles[1].image =  FullSheetSunnySideWorld.getSubimage(176,288, game.TileSize, game.TileSize);
+            tiles[1].image = FullSheetSunnySideWorld.getSubimage(176,288, srcTile, srcTile);
             tiles[1].collision = false;
 
-            // Earth Tile
             tiles[2] = new Tile();
-            tiles[2].image =  FullSheetSunnySideWorld.getSubimage(144,112, game.TileSize, game.TileSize);
+            tiles[2].image = FullSheetSunnySideWorld.getSubimage(144,112, srcTile, srcTile);
 
-            // Tree Tile
             tiles[3] = new Tile();
-            tiles[3].image = FullSheetSunnySideWorld.getSubimage(816,16, game.TileSize, game.TileSize);
+            tiles[3].image = FullSheetSunnySideWorld.getSubimage(816,16, srcTile, srcTile);
             tiles[3].collision = true;
 
-            // Flower Tile 15X16
             tiles[4] = new Tile();
             tiles[4].image = FullSheetSunnySideWorld.getSubimage(864,160, 15, 16);
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void DrawTiles(Graphics2D g2){
-        int width = 0; // calcuate tile position
-        int height = 0; //Calculate tile position
-
-        while (width < game.TileXCount) {
-            while(height < game.TileYCount) {
-
-                int tileNum = MapsArray.Map1[height][width];
-                int WorldX = width * game.TileSize;
-                int WorldY = height * game.TileSize;
-
-                g2.drawImage(tiles[tileNum].image, WorldX, WorldY, game.TileSize, game.TileSize, null);
-                height++;
+    public void DrawTiles(Graphics2D g2, int offsetX, int offsetY){
+        int[][] mapToDraw = game.CurrentMapDrawing;
+        if (mapToDraw == null || mapToDraw.length == 0) {
+            mapToDraw = MapsArray.WorldMap1;
+            if (mapToDraw == null || mapToDraw.length == 0) {
+                mapToDraw = MapsArray.Map1;
             }
-            height = 0;
-            width++;
         }
+
+        int rows = mapToDraw.length;
+        int cols = mapToDraw[0].length;
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                int tileNum = mapToDraw[row][col];
+                int worldX = col * game.TileSize;
+                int worldY = row * game.TileSize;
+                int screenX = worldX - offsetX;
+                int screenY = worldY - offsetY;
+
+                if (screenX + game.TileSize < 0 || screenX > game.JFrameWidth || screenY + game.TileSize < 0 || screenY > game.JFrameHeight) {
+                    continue;
+                }
+
+                BufferedImage img = null;
+                if (tileNum >= 0 && tileNum < tiles.length && tiles[tileNum] != null) {
+                    img = tiles[tileNum].image;
+                }
+                if (img == null) {
+                    if (tiles[0] != null) img = tiles[0].image;
+                }
+                if (img != null) {
+                    g2.drawImage(img, screenX, screenY, game.TileSize, game.TileSize, null);
+                } else {
+                    g2.setColor(Color.MAGENTA);
+                    g2.fillRect(screenX, screenY, game.TileSize, game.TileSize);
+                }
+            }
+        }
+    }
+
+    public int getMapCols() {
+        int[][] mapToDraw = MapsArray.WorldMap1;
+        if (mapToDraw == null || mapToDraw.length == 0) {
+            mapToDraw = MapsArray.Map1;
+        }
+        return mapToDraw[0].length;
+    }
+
+    public int getMapRows() {
+        int[][] mapToDraw = MapsArray.WorldMap1;
+        if (mapToDraw == null || mapToDraw.length == 0) {
+            mapToDraw = MapsArray.Map1;
+        }
+        return mapToDraw.length;
+    }
+
+    public int[][] getDefaultMap(){
+        int[][] mapToDraw = MapsArray.WorldMap1;
+        if (mapToDraw == null || mapToDraw.length == 0) mapToDraw = MapsArray.Map1;
+        return mapToDraw;
     }
 }

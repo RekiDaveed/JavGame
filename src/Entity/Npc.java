@@ -8,8 +8,6 @@ public class Npc extends  Entity {
     }
 
     public void SetDefaultValues(){
-        PositionX = 200;
-        PositionY = 200;
-        Speed = 2;
+
     }
 }

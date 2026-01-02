@@ -12,7 +12,7 @@ import java.awt.*;
 public class Game extends JPanel implements Runnable{
     public CardLayout GamecardLayout = new CardLayout();
     public Keyboard keyboard = new Keyboard();
-    public Tilemanager tilemanager = new Tilemanager(this);
+    public Tilemanager tilemanager;
     public Thread gameThread;
     public final int TileSize = 32;
     public final int TileXCount = 20;  // Map Width 760
@@ -28,9 +28,14 @@ public class Game extends JPanel implements Runnable{
     public int PlrSpeed = 4;
     int FPS = 60;
 
+    public final int MaxWorldCol = 50;
+    public final int MaxWorldRow = 50;
+    public final int WorldWidth = MaxWorldCol * TileSize;
+    public final int WorldHeight = MaxWorldRow * TileSize;
 
     public Game(){
         setLayout(GamecardLayout);
+        this.tilemanager = new Tilemanager(this);
         GamecardLayout.show(this, "MENU");
         new Menu(this);
         addKeyListener(keyboard);

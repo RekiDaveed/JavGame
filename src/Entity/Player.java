@@ -2,6 +2,7 @@ package Entity;
 
 import Input.Keyboard;
 import Maps.Map;
+import Maps.Tilemanager;
 import UI.Game;
 
 import javax.imageio.ImageIO;
@@ -29,11 +30,13 @@ public class Player extends  Entity {
         this.map = map;
         this.keyboard = mainpanel.keyboard;
         this.gamepanel = mainpanel;
+        this.ScreenX = mainpanel.JFrameWidth / 2 - (mainpanel.TileSize / 2);
+        this.ScreenY = mainpanel.JFrameHeight / 2 - (mainpanel.TileSize / 2);
         SetDefaultValues();
         LoadPlayerMovementImages();
     }
     
-    public void drawPlayer(Graphics2D g2d){
+    public void drawPlayer(Graphics2D g2d, int offsetX, int offsetY){
         BufferedImage CurrentRender = switch (Direction) {
             case "left" -> PlayerLeft[spriteNum];
             case "right" -> PlayerRight[spriteNum];
@@ -42,19 +45,22 @@ public class Player extends  Entity {
             default -> null;
         };
 
+        int screenX = WorldX - offsetX;
+        int screenY = WorldY - offsetY;
+
         if (CurrentRender != null) {
-            g2d.drawImage(CurrentRender, PositionX, PositionY, gamepanel.TileSize, gamepanel.TileSize, null);
+            g2d.drawImage(CurrentRender, screenX, screenY, gamepanel.TileSize, gamepanel.TileSize, null);
         } else {
             // Fallback: draw a blue rectangle if images are not loaded
 
             g2d.setColor(Color.BLUE);
-            g2d.fillRect(PositionX, PositionY, gamepanel.TileSize, gamepanel.TileSize);
+            g2d.fillRect(screenX, screenY, gamepanel.TileSize, gamepanel.TileSize);
         }
     }
 
     public void SetDefaultValues(){
-        PositionX = 100;
-        PositionY = 400;
+        WorldX = gamepanel.TileSize * 23;
+        WorldY = gamepanel.TileSize * 21;
         Speed = 4;
     }
 
@@ -80,23 +86,31 @@ public class Player extends  Entity {
     public void UpdatePlayerMovement(){
         // Update player elements here
         if (keyboard.Uppressed) {
-            PositionY -= Speed;
+            WorldY -= Speed;
             Direction = "up";
-            if (PositionY < 0) PositionY = 0;
         }
         if (keyboard.Dpressed) {
-            PositionX += Speed;
+            WorldX += Speed;
             Direction = "right";
         }
         if (keyboard.Apressed) {
-            PositionX -= Speed;
+            WorldX -= Speed;
             Direction = "left";
-            if (PositionX < 0) PositionX = 0;
         }
         if (keyboard.Spressed) {
-            PositionY += Speed;
+            WorldY += Speed;
             Direction = "down";
         }
+
+        Tilemanager tm = gamepanel.tilemanager;
+        int mapCols = tm.getMapCols();
+        int mapRows = tm.getMapRows();
+        int maxWorldX = (mapCols * gamepanel.TileSize) - gamepanel.TileSize;
+        int maxWorldY = (mapRows * gamepanel.TileSize) - gamepanel.TileSize;
+        if (WorldX < 0) WorldX = 0;
+        if (WorldY < 0) WorldY = 0;
+        if (WorldX > maxWorldX) WorldX = maxWorldX;
+        if (WorldY > maxWorldY) WorldY = maxWorldY;
 
         if (keyboard.Uppressed || keyboard.Spressed || keyboard.Apressed || keyboard.Dpressed) {
             spriteCounter++;
