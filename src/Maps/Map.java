@@ -83,6 +83,7 @@ public class Map extends JPanel {
 
     public void Movement(){
         player.UpdatePlayerMovement();
+        Tilemanager.WorldUpdateLoop();
     }
 
 
