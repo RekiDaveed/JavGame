@@ -12,6 +12,7 @@ public class Tilemanager {
     Game game;
     Tile[] tiles;
     MapsArray MapsArray = new MapsArray();
+    int[][] mapToDraw;
 
     // X = Left Right 0 - MAX , Y = Top Bottom 0 - MAX
     // Grass = Tile[0]
@@ -27,7 +28,9 @@ public class Tilemanager {
 
     public Tilemanager(Game game) {
         this.game = game;
+        game.CurrentMapDrawing = MapsArray.WorldMap1;
         tiles = new Tile[10];
+        mapToDraw = game.CurrentMapDrawing;
         GettileImage();
     }
 
@@ -58,14 +61,8 @@ public class Tilemanager {
         }
     }
 
+
     public void DrawTiles(Graphics2D g2, int offsetX, int offsetY){
-        int[][] mapToDraw = game.CurrentMapDrawing;
-        if (mapToDraw == null || mapToDraw.length == 0) {
-            mapToDraw = MapsArray.WorldMap1;
-            if (mapToDraw == null || mapToDraw.length == 0) {
-                mapToDraw = MapsArray.Map1;
-            }
-        }
 
         int rows = mapToDraw.length;
         int cols = mapToDraw[0].length;
@@ -100,24 +97,14 @@ public class Tilemanager {
     }
 
     public int getMapCols() {
-        int[][] mapToDraw = MapsArray.WorldMap1;
-        if (mapToDraw == null || mapToDraw.length == 0) {
-            mapToDraw = MapsArray.Map1;
-        }
         return mapToDraw[0].length;
     }
 
     public int getMapRows() {
-        int[][] mapToDraw = MapsArray.WorldMap1;
-        if (mapToDraw == null || mapToDraw.length == 0) {
-            mapToDraw = MapsArray.Map1;
-        }
         return mapToDraw.length;
     }
 
     public int[][] getDefaultMap(){
-        int[][] mapToDraw = MapsArray.WorldMap1;
-        if (mapToDraw == null || mapToDraw.length == 0) mapToDraw = MapsArray.Map1;
         return mapToDraw;
     }
 }
