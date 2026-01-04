@@ -37,6 +37,8 @@ public class Tilemanager {
         tiles = new Tile[20];
         mapToDraw = game.CurrentMapDrawing;
         MapReference = MapsArray.WorldMap1;
+        tiles = new Tile[10];
+        mapToDraw = game.CurrentMapDrawing;
         GettileImage();
         WorldUpdateLoop();
     }
