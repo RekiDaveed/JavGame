@@ -70,13 +70,13 @@ public class Tilemanager {
 
             BufferedImage WallGrassTile = TileSet_V1Png.getSubimage(128,64, srcTile, srcTile);
             tiles[8] = new Tile();
-            tiles[8].image = FlippedImage(WallGrassTile, true, true); // LEFT WALL GRASS TILE
+            tiles[8].image = RotateImg(WallGrassTile, -90); // LEFT WALL GRASS TILE
 
             tiles[9] = new Tile();
             tiles[9].image = WallGrassTile; // TOP WALL GRASS TILE
 
             tiles[10] = new Tile();
-            tiles[10].image = FlippedImage(WallGrassTile, false, true); //  RIGHT WALL GRASS TILE
+            tiles[10].image = RotateImg(tiles[8].image, 180); //  RIGHT WALL GRASS TILE
 
             tiles[11] = new Tile();
             tiles[11].image = FlippedImage(WallGrassTile, false, true);  // BOTTOM WALL GRASS TILE
@@ -95,7 +95,32 @@ public class Tilemanager {
         g.drawImage(image, Horizontal ? w : 0, Vertical ? h : 0, Horizontal ? -w : w, Vertical ? -h : h, null);
         g.dispose();
         return flippedImage;
+    }
 
+    public BufferedImage RotateImg(BufferedImage image, int degrees) {
+        int w = image.getWidth();
+        int h = image.getHeight();
+
+        // Determine new dimensions
+        // For 90 or 270, width and height swap
+        boolean swapped = (degrees == 90 || degrees == 270 || degrees == -90 || degrees == -270);
+        int newW = swapped ? h : w;
+        int newH = swapped ? w : h;
+
+        BufferedImage rotatedImage = new BufferedImage(newW, newH, image.getType());
+        Graphics2D g2 = rotatedImage.createGraphics();
+
+        // 1. Move the canvas so the rotation happens around the new center
+        g2.translate((newW - w) / 2.0, (newH - h) / 2.0);
+
+        // 2. Rotate around the center of the original image
+        g2.rotate(Math.toRadians(degrees), w / 2.0, h / 2.0);
+
+        // 3. Draw the original image
+        g2.drawImage(image, 0, 0, null);
+        g2.dispose();
+
+        return rotatedImage;
     }
 
     public void DrawTiles(Graphics2D g2, int offsetX, int offsetY){
