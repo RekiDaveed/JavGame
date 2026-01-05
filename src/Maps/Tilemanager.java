@@ -20,16 +20,6 @@ public class Tilemanager {
     int AnimFrame = 0;
 
     // X = Left Right 0 - MAX , Y = Top Bottom 0 - MAX
-    // Grass = Tile[0]
-    // Water = Tile[1]
-    // Earth = Tile[2]
-    // Tree = Tile[3]
-    // Flower = Tile[4]
-    // Sand = Tile[5]
-    // House = Tile[6]
-    // Animal = Tile[7]
-    // Road = Tile[8]
-
 
     public Tilemanager(Game game) {
         this.game = game;
@@ -101,8 +91,6 @@ public class Tilemanager {
         int w = image.getWidth();
         int h = image.getHeight();
 
-        // Determine new dimensions
-        // For 90 or 270, width and height swap
         boolean swapped = (degrees == 90 || degrees == 270 || degrees == -90 || degrees == -270);
         int newW = swapped ? h : w;
         int newH = swapped ? w : h;
@@ -110,13 +98,10 @@ public class Tilemanager {
         BufferedImage rotatedImage = new BufferedImage(newW, newH, image.getType());
         Graphics2D g2 = rotatedImage.createGraphics();
 
-        // 1. Move the canvas so the rotation happens around the new center
         g2.translate((newW - w) / 2.0, (newH - h) / 2.0);
 
-        // 2. Rotate around the center of the original image
         g2.rotate(Math.toRadians(degrees), w / 2.0, h / 2.0);
 
-        // 3. Draw the original image
         g2.drawImage(image, 0, 0, null);
         g2.dispose();
 
@@ -163,7 +148,7 @@ public class Tilemanager {
             if (AnimFrame > 3){
                 AnimFrame = 0;
             }
-            // Update animated tiles in mapToDraw
+
             for (int row = 0; row < MapReference.length; row++) {
                 for (int col = 0; col < MapReference[0].length; col++) {
 
