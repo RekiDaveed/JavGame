@@ -22,7 +22,6 @@ public class Player extends  Entity {
     public BufferedImage[] PlayerUp = new BufferedImage[4];
     public BufferedImage[] PlayerDown = new BufferedImage[4];
 
-    public String Direction = "down";
     public int spriteCounter = 0;
     public int spriteNum = 0;
 
@@ -32,12 +31,14 @@ public class Player extends  Entity {
         this.gamepanel = mainpanel;
         this.ScreenX = mainpanel.JFrameWidth / 2 - (mainpanel.TileSize / 2);
         this.ScreenY = mainpanel.JFrameHeight / 2 - (mainpanel.TileSize / 2);
+
+        CollisionSize = new Rectangle(8, 16, mainpanel.TileSize - 10, mainpanel.TileSize - 10);
         SetDefaultValues();
         LoadPlayerMovementImages();
     }
     
     public void drawPlayer(Graphics2D g2d, int offsetX, int offsetY){
-        BufferedImage CurrentRender = switch (Direction) {
+        BufferedImage CurrentRender = switch (direction) {
             case "left" -> PlayerLeft[spriteNum];
             case "right" -> PlayerRight[spriteNum];
             case "up" -> PlayerUp[spriteNum];
@@ -62,6 +63,7 @@ public class Player extends  Entity {
         WorldX = gamepanel.TileSize * 23;
         WorldY = gamepanel.TileSize * 21;
         Speed = 4;
+        direction = "left";
     }
 
     public void LoadPlayerMovementImages(){
@@ -84,23 +86,6 @@ public class Player extends  Entity {
     }
     
     public void UpdatePlayerMovement(){
-        // Update player elements here
-        if (keyboard.Uppressed) {
-            WorldY -= Speed;
-            Direction = "up";
-        }
-        if (keyboard.Dpressed) {
-            WorldX += Speed;
-            Direction = "right";
-        }
-        if (keyboard.Apressed) {
-            WorldX -= Speed;
-            Direction = "left";
-        }
-        if (keyboard.Spressed) {
-            WorldY += Speed;
-            Direction = "down";
-        }
 
         Tilemanager tm = gamepanel.tilemanager;
         int mapCols = tm.getMapCols();
@@ -114,6 +99,34 @@ public class Player extends  Entity {
 
         if (keyboard.Uppressed || keyboard.Spressed || keyboard.Apressed || keyboard.Dpressed) {
             spriteCounter++;
+
+            // Update player elements here
+            if (keyboard.Uppressed) {
+                direction = "up";
+            }
+            if (keyboard.Dpressed) {
+                direction = "right";
+            }
+            if (keyboard.Apressed) {
+                direction = "left";
+            }
+            if (keyboard.Spressed) {
+                direction = "down";
+            }
+
+        // COLLISION CHECK HERE
+        Collide = false;
+        gamepanel.CollisionChecker.CheckTile(this);
+
+        if (!Collide){
+            switch (direction) {
+                case "up": WorldY -= Speed; break;
+                case "down":  WorldY += Speed; break;
+                case "left":  WorldX -= Speed; break;
+                case "right": WorldX += Speed; break;
+
+            }
+        }
             if (spriteCounter > 10) {
                 spriteNum++;
                 if (spriteNum >= 4) spriteNum = 0;

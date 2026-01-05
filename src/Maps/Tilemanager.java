@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Tilemanager {
     Game game;
-    Tile[] tiles;
+    public Tile[] tiles;
     MapsArray MapsArray = new MapsArray();
     int[][] mapToDraw;
     int[][] MapReference;
@@ -24,7 +24,7 @@ public class Tilemanager {
     public Tilemanager(Game game) {
         this.game = game;
         game.CurrentMapDrawing = MapsArray.WorldMap1;
-        tiles = new Tile[20];
+        tiles = new Tile[50];
         mapToDraw = game.CurrentMapDrawing;
         MapReference = MapsArray.WorldMap1;
         GettileImage();
@@ -45,20 +45,25 @@ public class Tilemanager {
                 tiles[i].image = Grass4frameTiles.getSubimage(i * srcTile, 0, srcTile, srcTile);
             }
 
-            BufferedImage CornerImageBL = TileSet_V1Png.getSubimage(0,160, srcTile, srcTile);
+            // -------------------------------------------------------------------------------------------------------------------------------------------//
+            BufferedImage CornerImageBL = TileSet_V1Png.getSubimage(64,128, srcTile, srcTile);
             tiles[4] = new Tile();
-            tiles[4].image = CornerImageBL;  // Corner BOTTOM LEFT
+            tiles[4].image = RotateImg(CornerImageBL, -90); // CORNER BOTTOM LEFT
 
             tiles[5] = new Tile();
-            tiles[5].image = FlippedImage(CornerImageBL, true, false); // Corner BOTTOM RIGHT
+            tiles[5].image = RotateImg(CornerImageBL, 180); // CORNER BOTTOM RIGHT
 
             tiles[6] = new Tile();
-            tiles[6].image = FlippedImage(CornerImageBL, false, true);  // Corner TOP RIGHT
+            tiles[6].image = CornerImageBL;  // CORNER TOP LEFT
 
             tiles[7] = new Tile();
-            tiles[7].image = FlippedImage(CornerImageBL, true, true);  // Corner TOP LEFT
+            tiles[7].image = RotateImg(CornerImageBL, 90);  // CORNER TOP RIGHT
 
+            // --------------------------------------------------------------------------------------------------------------------------------------------//
             BufferedImage WallGrassTile = TileSet_V1Png.getSubimage(128,64, srcTile, srcTile);
+
+            // GRASS CORNERS
+
             tiles[8] = new Tile();
             tiles[8].image = RotateImg(WallGrassTile, -90); // LEFT WALL GRASS TILE
 
@@ -70,6 +75,57 @@ public class Tilemanager {
 
             tiles[11] = new Tile();
             tiles[11].image = FlippedImage(WallGrassTile, false, true);  // BOTTOM WALL GRASS TILE
+
+            // ---------------------------------------------------------------------------------------------------------------------------------------//
+
+            // Water Tiles
+
+            BufferedImage WaterAnimation = TileSet_V1Png.getSubimage(41, 224, srcTile, srcTile); // 12
+            BufferedImage WaterAnimation2 = TileSet_V1Png.getSubimage(55, 224, srcTile, srcTile); // 13
+            BufferedImage WaterAnimation3 = TileSet_V1Png.getSubimage(0, 416, srcTile, srcTile); // 14
+
+            tiles[12] = new Tile();
+            tiles[12].image = WaterAnimation3;
+
+            tiles[13] = new Tile();
+            tiles[13].image = WaterAnimation;
+
+            tiles[14] = new Tile();
+            tiles[14].image = WaterAnimation2;
+
+
+            // ----------------------------------------------------------------------------------------------------------------------------------------//
+
+            BufferedImage WaterCorner = TileSet_V1Png.getSubimage(64, 352, srcTile, srcTile);
+            tiles[15] = new Tile();
+            tiles[15].image = WaterCorner;  // TOP LEFT CORNER
+
+            tiles[16] = new Tile();
+            tiles[16].image = RotateImg(WaterCorner, -90); // BOTTOM LEFT CORNER
+
+            tiles[17] = new Tile();
+            tiles[17].image = RotateImg(WaterCorner, -180); //  BOTTOM RIGHT CORNER
+
+            tiles[18] = new Tile();
+            tiles[18].image = RotateImg(WaterCorner, 90);  // TOP RIGHT CORNER
+
+            BufferedImage WaterLine = TileSet_V1Png.getSubimage(128, 288, srcTile, srcTile);
+
+            tiles[19] = new Tile();
+            tiles[19].image = WaterLine;  // TOP
+            tiles[19].collision = true;
+
+            tiles[20] = new Tile();
+            tiles[20].image = RotateImg(WaterLine, -90); // RIGHT
+            tiles[20].collision = true;
+
+            tiles[21] = new Tile();
+            tiles[21].image = RotateImg(WaterLine, 90); // LEFT
+            tiles[21].collision = true;
+
+            tiles[22] = new Tile();
+            tiles[22].image = RotateImg(WaterLine, -180); // BOTTOM
+            tiles[22].collision = true;
 
 
         } catch (IOException e) {
@@ -141,30 +197,36 @@ public class Tilemanager {
             }
         }
     }
-    public void AnimateTiles(){
+    public void WorldUpdateLoop(){
         AnimCounter++;
-        if (AnimCounter > 50){
+        if(AnimCounter > 50){
             AnimFrame++;
-            if (AnimFrame > 3){
+            if(AnimFrame > 3){
                 AnimFrame = 0;
-            }
-
-            for (int row = 0; row < MapReference.length; row++) {
-                for (int col = 0; col < MapReference[0].length; col++) {
-
-                    if (MapReference[row][col] >= 0 && MapReference[row][col] <= 3) {
-                        int individualFrame = (AnimFrame + row + col) % 4;
-                        mapToDraw[row][col] = individualFrame;
-                    }
-                }
             }
             AnimCounter = 0;
         }
+        AnimateTiles(0, 3); // Grass Animation
+        AnimateTiles(12, 14);
+
     }
 
-    public void WorldUpdateLoop(){
-        AnimateTiles();
+    public void AnimateTiles(int Startindex, int Endindex) {
+
+        int totalFrames = (Endindex - Startindex) + 1;
+
+        for (int row = 0; row < MapReference.length; row++) {
+            for (int col = 0; col < MapReference[0].length; col++) {
+                int originalTile = MapReference[row][col];
+
+                if (originalTile >= Startindex && originalTile <= Endindex) {
+                    int frameOffset = (AnimFrame + row + col) % totalFrames;
+                    mapToDraw[row][col] = Startindex + frameOffset;
+                }
+            }
+        }
     }
+
 
     public int getMapCols() {
         return mapToDraw[0].length;

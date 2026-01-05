@@ -2,6 +2,7 @@ package UI;
 
 import Input.Keyboard;
 import Main.G_State;
+import Maps.CollisionChecker;
 import Maps.Map;
 import Maps.Tilemanager;
 
@@ -19,6 +20,7 @@ public class Game extends JPanel implements Runnable{
     public final int TileYCount = 16;  // Map Height 608
     public Map CurrentMap;
     public int[][] CurrentMapDrawing;
+    public CollisionChecker CollisionChecker;
 
     public final int JFrameWidth = TileXCount * TileSize;
     public final int JFrameHeight = TileYCount * TileSize;
@@ -30,7 +32,7 @@ public class Game extends JPanel implements Runnable{
 
     public final int MaxWorldCol = 50;
     public final int MaxWorldRow = 50;
-    public final int WorldWidth = MaxWorldCol * TileSize;
+    public final int WorldWidth = MaxWorldCol * TileSize;  // 50 x 32 = 1600 W . L
     public final int WorldHeight = MaxWorldRow * TileSize;
 
     public Game(){
@@ -39,6 +41,7 @@ public class Game extends JPanel implements Runnable{
         GamecardLayout.show(this, "MENU");
         new Menu(this);
         addKeyListener(keyboard);
+        this.CollisionChecker = new CollisionChecker(this);
         setFocusable(true);
         requestFocusInWindow();
 
