@@ -37,8 +37,6 @@ public class Tilemanager {
         tiles = new Tile[20];
         mapToDraw = game.CurrentMapDrawing;
         MapReference = MapsArray.WorldMap1;
-        tiles = new Tile[10];
-        mapToDraw = game.CurrentMapDrawing;
         GettileImage();
         WorldUpdateLoop();
     }
@@ -78,10 +76,10 @@ public class Tilemanager {
             tiles[9].image = WallGrassTile; // TOP WALL GRASS TILE
 
             tiles[10] = new Tile();
-            tiles[10].image = FlippedImage(WallGrassTile, false, true);
+            tiles[10].image = FlippedImage(WallGrassTile, false, true); //  RIGHT WALL GRASS TILE
 
             tiles[11] = new Tile();
-            tiles[11].image = FlippedImage(WallGrassTile, false, true);
+            tiles[11].image = FlippedImage(WallGrassTile, false, true);  // BOTTOM WALL GRASS TILE
 
 
         } catch (IOException e) {
