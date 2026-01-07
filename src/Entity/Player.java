@@ -116,22 +116,42 @@ public class Player extends  Entity {
 
         // COLLISION CHECK HERE
         Collide = false;
-        gamepanel.CollisionChecker.CheckTile(this);
 
-        if (!Collide){
-            switch (direction) {
-                case "up": WorldY -= Speed; break;
-                case "down":  WorldY += Speed; break;
-                case "left":  WorldX -= Speed; break;
-                case "right": WorldX += Speed; break;
+        // Axis-separated movement: check X, then Y
+        int dx = 0, dy = 0;
+        switch (direction) {
+            case "up": dy = -Speed; break;
+            case "down": dy = Speed; break;
+            case "left": dx = -Speed; break;
+            case "right": dx = Speed; break;
+        }
 
+        // Tentatively move in X and check
+        if (dx != 0) {
+            int oldX = WorldX;
+            WorldX += dx;
+            gamepanel.CollisionChecker.CheckTile(this);
+            if (Collide) {
+                WorldX = oldX; // revert if collision
             }
         }
-            if (spriteCounter > 10) {
-                spriteNum++;
-                if (spriteNum >= 4) spriteNum = 0;
-                spriteCounter = 0;
+
+        // Tentatively move in Y and check
+        if (dy != 0) {
+            int oldY = WorldY;
+            WorldY += dy;
+            gamepanel.CollisionChecker.CheckTile(this);
+            if (Collide) {
+                WorldY = oldY; // revert if collision
             }
+        }
+
+        // sprite animation update
+        if (spriteCounter > 10) {
+            spriteNum++;
+            if (spriteNum >= 4) spriteNum = 0;
+            spriteCounter = 0;
+        }
         } else {
             spriteNum = 0; // Reset to standing still frame when not moving
         }

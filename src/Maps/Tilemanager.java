@@ -99,15 +99,19 @@ public class Tilemanager {
             BufferedImage WaterCorner = TileSet_V1Png.getSubimage(64, 352, srcTile, srcTile);
             tiles[15] = new Tile();
             tiles[15].image = WaterCorner;  // TOP LEFT CORNER
+            tiles[15].collision = true;
 
             tiles[16] = new Tile();
             tiles[16].image = RotateImg(WaterCorner, -90); // BOTTOM LEFT CORNER
+            tiles[16].collision = true;
 
             tiles[17] = new Tile();
             tiles[17].image = RotateImg(WaterCorner, -180); //  BOTTOM RIGHT CORNER
+            tiles[17].collision = true;
 
             tiles[18] = new Tile();
             tiles[18].image = RotateImg(WaterCorner, 90);  // TOP RIGHT CORNER
+            tiles[18].collision = true;
 
             BufferedImage WaterLine = TileSet_V1Png.getSubimage(128, 288, srcTile, srcTile);
 
