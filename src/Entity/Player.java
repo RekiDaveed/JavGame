@@ -117,7 +117,6 @@ public class Player extends  Entity {
         // COLLISION CHECK HERE
         Collide = false;
 
-        // Axis-separated movement: check X, then Y
         int dx = 0, dy = 0;
         switch (direction) {
             case "up": dy = -Speed; break;
@@ -126,7 +125,6 @@ public class Player extends  Entity {
             case "right": dx = Speed; break;
         }
 
-        // Tentatively move in X and check
         if (dx != 0) {
             int oldX = WorldX;
             WorldX += dx;
@@ -136,13 +134,12 @@ public class Player extends  Entity {
             }
         }
 
-        // Tentatively move in Y and check
         if (dy != 0) {
             int oldY = WorldY;
             WorldY += dy;
             gamepanel.CollisionChecker.CheckTile(this);
             if (Collide) {
-                WorldY = oldY; // revert if collision
+                WorldY = oldY;
             }
         }
 
