@@ -62,7 +62,7 @@ public class Player extends  Entity {
     public void SetDefaultValues(){
         WorldX = gamepanel.TileSize * 23;
         WorldY = gamepanel.TileSize * 21;
-        Speed = 4;
+        Speed = 6;
         direction = "left";
     }
 

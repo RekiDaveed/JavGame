@@ -8,6 +8,8 @@ public class Entity {
     public int Speed;
     public int ScreenX;
     public int ScreenY;
+    public int Health;
+    public int Level;
     public String direction = "down";
 
     public Rectangle CollisionSize;

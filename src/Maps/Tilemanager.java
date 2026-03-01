@@ -131,6 +131,10 @@ public class Tilemanager {
             tiles[22].image = RotateImg(WaterLine, -180); // BOTTOM
             tiles[22].collision = true;
 
+            tiles[23] = new Tile();
+            tiles[23].image = FullSheetSunnySideWorld.getSubimage(816, 18, srcTile, srcTile);
+            tiles[23].collision = true;
+
 
         } catch (IOException e) {
             e.printStackTrace();
