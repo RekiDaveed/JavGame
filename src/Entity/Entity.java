@@ -13,6 +13,6 @@ public class Entity {
     public String direction = "down";
 
     public Rectangle CollisionSize;
-    public boolean Collide = false;
+    public boolean Collide = true;
 
 }

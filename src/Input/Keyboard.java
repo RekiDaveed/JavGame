@@ -1,6 +1,6 @@
 package Input;
 
-import Main.G_State;
+import Main.GameState;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -36,11 +36,11 @@ public class Keyboard implements KeyListener {
         }
 
         if (KeyEvent.VK_SPACE == key) {
-            if (G_State.GetState() == G_State.Playing) {
-                G_State.SetState(G_State.Pause);
+            if (GameState.GetState() == GameState.Playing) {
+                GameState.SetState(GameState.Pause);
                 System.out.println("Game Paused");
-            } else if (G_State.GetState() == G_State.Pause) {
-                G_State.SetState(G_State.Playing);
+            } else if (GameState.GetState() == GameState.Pause) {
+                GameState.SetState(GameState.Playing);
                 System.out.println("Game Resumed");
             }
         }

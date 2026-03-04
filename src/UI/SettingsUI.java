@@ -1,5 +1,8 @@
 package UI;
 
+import Settings.SFX;
+import Settings.Music;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,7 +13,7 @@ public class SettingsUI extends JPanel {
     public static boolean GameTips = true;
     public static int DifficultyLevel = 1; // 1: Easy, 2: Medium, 3: Hard
 
-    public JButton ToggleSound = new JButton("Sound " + (SoundOn ? "On" : "Off"));
+    public JButton ToggleSound = new JButton("SFX: " + (SoundOn ? "On" : "Off"));
     public JButton ToggleMusic = new JButton("Music: " + (MusicOn ? "On" : "Off"));
     public JButton ToggleGameTips = new JButton("Game Tips: " + (GameTips ? "On" : "Off"));
     public JButton ChangeDifficulty = new JButton("Difficulty Level: " + (DifficultyLevel == 1 ? "Easy" : DifficultyLevel == 2 ? "Medium" : "Hard"));
@@ -43,12 +46,14 @@ public class SettingsUI extends JPanel {
 
         ToggleSound.addActionListener(e -> {
             SoundOn = ToggleOption(SoundOn);
-            ToggleSound.setText("Sound " + (SoundOn ? "On" : "Off"));
+            ToggleSound.setText("SFX: " + (SoundOn ? "On" : "Off"));
+            SFX.SetSound(MusicOn ? SFX.ON : SFX.OFF);
         });
 
         ToggleMusic.addActionListener(e -> {
             MusicOn = ToggleOption(MusicOn);
             ToggleMusic.setText("Music: " + (MusicOn ? "On" : "Off"));
+            Music.setmusic(MusicOn ? Music.ON : Music.OFF);
         });
 
         ToggleGameTips.addActionListener(e -> {
@@ -67,8 +72,6 @@ public class SettingsUI extends JPanel {
     }
 
     public void ShowSettings(Game maingame) {
-        // Implementation to show settings if needed
-        System.out.println("Settings Opened");
         maingame.GamecardLayout.show(maingame, "SettingsUI");
         for (Component c : maingame.getComponents()) {
             if (c instanceof Menu) {
@@ -78,8 +81,6 @@ public class SettingsUI extends JPanel {
     }
 
     public void HideSettings(Game maingame) {
-        // Implementation to hide settings if needed
-        System.out.println("Settings Closed");
         maingame.GamecardLayout.show(maingame, "MENU");
         for (Component c : maingame.getComponents()) {
             if (c instanceof Menu) {

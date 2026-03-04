@@ -25,7 +25,6 @@ public class Map extends JPanel {
         this.Tilemanager = mainpanel.tilemanager;
         mainpanel.GamecardLayout.show(mainpanel, "MAP1");
         setBackground(Color.BLACK);
-        System.out.println("Map1 Loaded");
         this.keyboard = mainpanel.keyboard;
 
         mainpanel.setFocusable(true);

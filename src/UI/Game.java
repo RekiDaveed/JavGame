@@ -1,7 +1,7 @@
 package UI;
 
 import Input.Keyboard;
-import Main.G_State;
+import Main.GameState;
 import Maps.CollisionChecker;
 import Maps.Map;
 import Maps.Tilemanager;
@@ -54,14 +54,14 @@ public class Game extends JPanel implements Runnable{
     }
 
     public void Beginning(){
-        G_State.SetState(G_State.Playing);
+        GameState.SetState(GameState.Playing);
         this.CurrentMap = new Map(this);
     }
 
     @Override
     public void run() {
         while(gameThread != null){
-            if (G_State.GetState() == G_State.Playing){
+            if (GameState.GetState() == GameState.Playing){
                 updateGame(); // main entry point method With FPS control
             } else {
                 // Nothing

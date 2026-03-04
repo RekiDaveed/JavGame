@@ -1,21 +1,21 @@
 package Main;
 
-public enum G_State {
+public enum GameState {
     Playing,
     Pause,
     Settings,
     MainMenu,
     GameOver;
 
-    public static G_State G_state = MainMenu;
+    public static GameState gamestate = MainMenu;
 
-    public static G_State SetState(G_State s){
-        G_state  = s;
+    public static GameState SetState(GameState s){
+        gamestate = s;
         return s;
     }
 
     public void StateAction(){
-        switch (G_state){
+        switch (gamestate){
             case Playing:
                 System.out.println("Game is Playing");
                 break;
@@ -34,13 +34,13 @@ public enum G_State {
         }
     }
 
-    public static G_State GetState(){
-        return G_state;
+    public static GameState GetState(){
+        return gamestate;
     }
 
-    public static G_State SetPlaying(Thread thread){
-        G_state = Playing;
+    public static GameState SetPlaying(Thread thread){
+        gamestate = Playing;
         thread.start();
-        return G_state;
+        return gamestate;
     }
 }
